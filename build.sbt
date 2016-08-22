@@ -41,6 +41,8 @@ excludeFilter := {
   if (!jars.contains("gurobi.jar")) {
     println(s"[warn] Building without the support of Gurobi solver ('gurobi.jar' is missing from '${unmanagedBase.value.getName}' directory)")
     excludeNames += "Gurobi"
+    println(s"[warn] WML - BUILDING WITHOUT LPSOLVE")
+    excludeNames += "LPSolve"
   }
   if(excludeNames.isEmpty) new SimpleFileFilter(_ => false)
   else excludeNames.map(n => new SimpleFileFilter(_.getName.contains(n)).asInstanceOf[FileFilter]).reduceRight(_ || _)

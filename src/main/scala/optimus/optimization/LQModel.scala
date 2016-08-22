@@ -48,7 +48,11 @@ class LQProblem private[optimization](solverLib: SolverLib = SolverLib.oJalgo) e
         case _ => sys.error("Gurobi is not supported in this build. Please rebuild Optimus with Gurobi dependencies.")
       }
 
-    case SolverLib.lp_solve => new LPSolve
+    case SolverLib.lp_solve =>
+      Try(Class.forName("optimus.optimization.LPSolve")) match {
+        case Success(c) => c.newInstance().asInstanceOf[AbstractMPSolver]
+        case _ => sys.error("LPSolve is not supported in this build. Please rebuild Optimus with LPSolve and Gurobi enabled.")
+      }
 
     case _ => new OJalgo
   }
@@ -74,7 +78,11 @@ class MIProblem private[optimization](solverLib: SolverLib = SolverLib.oJalgo) e
         case _ => sys.error("Gurobi is not supported in this build. Please rebuild Optimus with Gurobi dependencies.")
       }
 
-    case SolverLib.lp_solve => new LPSolve
+    case SolverLib.lp_solve =>
+      Try(Class.forName("optimus.optimization.LPSolve")) match {
+        case Success(c) => c.newInstance().asInstanceOf[AbstractMPSolver]
+        case _ => sys.error("LPSolve is not supported in this build. Please rebuild Optimus with LPSolve and Gurobi enabled.")
+      }
 
     case _ => new OJalgo
   }

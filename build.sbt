@@ -1,5 +1,6 @@
 
 OptimusBuild.settings
+scalaVersion := "2.11.5"
 
 resolvers ++= Seq(
   "typesafe" at "http://repo.typesafe.com/typesafe/releases/",

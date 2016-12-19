@@ -19,7 +19,7 @@ object OptimusBuild {
 
     organization := "com.github.vagm",
 
-    scalaVersion := "2.11.8",
+    scalaVersion := "2.11.5",
 
     autoScalaLibrary := true,
 

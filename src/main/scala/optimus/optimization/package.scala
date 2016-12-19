@@ -35,7 +35,9 @@ import optimus.optimization.PreSolve.PreSolve
   */
 package object optimization {
 
-  object SolverLib extends Enumeration {
+ val emitLog: (=> String) => Unit = (s) => System.out.println(s)
+ 
+ object SolverLib extends Enumeration {
 
     type SolverLib = Value
 
@@ -51,7 +53,7 @@ package object optimization {
   private def canInstantiateSolver(s: SolverLib.Value): Boolean = {
     try new LQProblem(s)
     catch {
-      case e: Exception => println(e.getMessage); return false
+      case e: Exception => emitLog(e.getMessage); return false
     }
     true
   }

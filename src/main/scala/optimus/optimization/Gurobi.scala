@@ -55,15 +55,15 @@ final class Gurobi extends AbstractMPSolver {
    */
   def buildProblem(nbRows: Int, nbCols: Int) {
 
-    println {
+    /* emitLog {
         """    _________                   ______ _____  """ + "\n" +
         """    __  ____/___  _________________  /____(_) """ + "\n" +
         """    _  / __ _  / / /_  ___/  __ \_  __ \_  /  """ + "\n" +
         """    / /_/ / / /_/ /_  /   / /_/ /  /_/ /  /   """ + "\n" +
         """    \____/  \__._/ /_/    \____//_____//_/    """ + "\n"
-    }
+    } */
 
-    println("Model gurobi: " + nbRows + "x" + nbCols)
+    emitLog("Model gurobi: " + nbRows + "x" + nbCols)
 
     model.getEnv.set(GRB.IntParam.OutputFlag, 0)
 
@@ -260,7 +260,7 @@ final class Gurobi extends AbstractMPSolver {
     }
     else {
       solution = Array.tabulate(nbCols)(col => model.getVar(col).get(GRB.DoubleAttr.X))
-      println("Optimization stopped with status = " + optimizationStatus)
+      emitLog("Optimization stopped with status = " + optimizationStatus)
       ProblemStatus.SUBOPTIMAL
     }
   }

@@ -253,20 +253,20 @@ abstract class AbstractMPProblem {
     if(!reOptimize) {
       solver.buildProblem(constraints.size, variables.size)
 
-      println("Configuring variable bounds...")
+      emitLog("Configuring variable bounds...")
       setVariableProperties()
 
-      println("Adding objective function...")
+      emitLog("Adding objective function...")
       solver.addObjective(objective, minimize)
 
       print("Creating constraints: ")
       val start = System.currentTimeMillis()
       addAllConstraints()
-      println(" in " + (System.currentTimeMillis() - start) + "ms")
+      emitLog(" in " + (System.currentTimeMillis() - start) + "ms")
 
       reOptimize = true
     }
-    else println("Re-optimize")
+    else emitLog("Re-optimize")
 
     if (timeLimit < Int.MaxValue)
       solver.setTimeout(timeLimit)
@@ -276,12 +276,12 @@ abstract class AbstractMPProblem {
   }
 
   def solveProblem(preSolve: PreSolve) {
-    println("Solving...")
+    emitLog("Solving...")
     status = solver.solveProblem(preSolve)
     if ( (status == ProblemStatus.OPTIMAL) || (status == ProblemStatus.SUBOPTIMAL) )
       variables.indices foreach { i => solution(i) = solver.getValue(i) }
 
-    println("Solution status is " + status)
+    emitLog("Solution status is " + status)
   }
 
   def checkConstraints(tol: Double = 10e-6): Boolean = constraints.forall(_.check(tol))
@@ -354,7 +354,7 @@ class MPConstraint(val problem: AbstractMPProblem, val constraint: Constraint, v
       case ConstraintRelation.EQ => value.abs - tol <= 0
     }
     case Failure(exception) =>
-      println(exception.getMessage)
+      emitLog(exception.getMessage)
       false
   }
 
@@ -388,7 +388,7 @@ class MPConstraint(val problem: AbstractMPProblem, val constraint: Constraint, v
   def isTight(tol: Double = 10e-6) = slack match {
     case Success(value) => value.abs <= tol
     case Failure(exception) =>
-      println(exception.getMessage)
+      emitLog(exception.getMessage)
       false
   }
 

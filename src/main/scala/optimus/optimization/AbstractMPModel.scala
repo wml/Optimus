@@ -160,7 +160,7 @@ abstract class AbstractMPSolver {
       addConstraint(constraints(idx))
       idx += 1
     }
-    print("Added " + len + " constraints")
+    emitLog("Added " + len + " constraints...")
   }
 
   /**
@@ -259,10 +259,10 @@ abstract class AbstractMPProblem {
       emitLog("Adding objective function...")
       solver.addObjective(objective, minimize)
 
-      print("Creating constraints: ")
+      emitLog("Creating constraints...")
       val start = System.currentTimeMillis()
       addAllConstraints()
-      emitLog(" in " + (System.currentTimeMillis() - start) + "ms")
+      emitLog("finished in " + (System.currentTimeMillis() - start) + "ms")
 
       reOptimize = true
     }

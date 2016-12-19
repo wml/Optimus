@@ -35,7 +35,7 @@ import optimus.optimization.PreSolve.PreSolve
   */
 package object optimization {
 
- val emitLog: (=> String) => Unit = (s) => System.out.println(s)
+ var emitLog: (=> String) => Unit = (s) => System.out.println(s)
  
  object SolverLib extends Enumeration {
 

@@ -4,7 +4,7 @@ import optimus.algebra.{ConstraintRelation, Expression}
 import optimus.optimization.PreSolve.PreSolve
 import optimus.optimization.ProblemStatus.ProblemStatus
 import org.ojalgo.constant.BigMath
-import org.ojalgo.optimisation.{Optimisation, Variable, ExpressionsBasedModel}
+import org.ojalgo.optimisation.{Optimisation, Variable, ExpressionsBasedModel, GenericSolver}
 import optimus.algebra._
 
 /*
@@ -45,7 +45,11 @@ final class OJalgo extends AbstractMPSolver {
   var objectiveValue = 0.0
   var status = ProblemStatus.NOT_SOLVED
 
-  val model = new ExpressionsBasedModel
+  val o = new Optimisation.Options()
+  o.debug_solver = classOf[GenericSolver] // TODO: WML: make configurable
+  o.debug_appender = org.ojalgo.netio.BasicLogger.DEBUG
+
+  val model = new ExpressionsBasedModel(o)
 
   // Internal flag for keeping optimization state
   private var minimize = true
